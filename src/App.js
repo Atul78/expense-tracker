@@ -160,10 +160,10 @@ function AppInner() {
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Expense Tracker</h1>
           <div className="flex gap-2">
             <button data-testid="add-money-btn" onClick={openMoney} className="inline-flex items-center gap-2 rounded-2xl px-4 py-2 bg-emerald-600 hover:bg-emerald-500 transition shadow">
-              <FiPlus /> Add Income
+              + Add Income
             </button>
             <button data-testid="open-add-expense" onClick={openAddExpense} className="inline-flex items-center gap-2 rounded-2xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 transition shadow">
-              <FiPlus /> Add Expense
+              + Add Expense
             </button>
           </div>
         </header>
