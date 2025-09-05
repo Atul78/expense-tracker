@@ -18,26 +18,28 @@ const ExpenseCard = () => {
 
   const handleAddExpense = () => {
     if (!title || !amount || !category || !date) {
-      enqueueSnackbar("Please fill all fields!", { variant: "error" });
+      alert("Please fill all fields!");
       return;
     }
 
-    // Negative or zero validation
     if (Number(amount) <= 0) {
-      enqueueSnackbar("Amount must be greater than 0!", { variant: "error" });
+      alert("Amount must be greater than 0!");
       return;
     }
+
+    // Convert date format from yyyy-mm-dd → yy-day-month
+    const [year, month, day] = date.split("-");
+    const formattedDate = `${year.slice(2)}-${day}-${month}`; // ✅ yy-day-month
 
     const success = addExpense({
       id: uuidv4(),
-      title: title.trim(),
+      title,
       amount: Number(amount),
       category,
-      date,
+      date: formattedDate,
     });
 
     if (success) {
-      enqueueSnackbar("Expense added successfully!", { variant: "success" });
       setTitle("");
       setAmount("");
       setCategory("");
@@ -66,60 +68,66 @@ const ExpenseCard = () => {
       >
         <h2 className="modal-title">Add Expense</h2>
 
-        <div className="modal-body">
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="modal-input"
-          />
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="modal-input"
-            min={0}
-          />
-          <select
-            name="category" // ✅ Added for Cypress test
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="modal-input"
-          >
-            <option value="">Select category</option>
-            <option value="Food">Food</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Travel">Travel</option>
-          </select>
-          <input
-            type="date"
-            name="date" // ✅ Added for Cypress test
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="modal-input"
-          />
-        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAddExpense();
+          }}
+        >
+          <div className="modal-body">
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="modal-input"
+            />
 
-        <div className="modal-actions">
-          <button
-            type="submit" // ✅ Important for Cypress `.contains('Add Expense').click()`
-            className="btn btn-yellow"
-            onClick={handleAddExpense}
-          >
-            Add Expense
-          </button>
-          <button
-            type="button"
-            className="btn btn-gray"
-            onClick={() => setIsModalOpen(false)}
-          >
-            Cancel
-          </button>
-        </div>
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="modal-input"
+              min={0}
+            />
+
+            <select
+              name="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="modal-input"
+            >
+              <option value="">Select category</option>
+              <option value="Food">Food</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Travel">Travel</option>
+            </select>
+
+            <input
+              type="date"
+              name="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="modal-input"
+            />
+          </div>
+
+          <div className="modal-actions">
+            <button type="submit" className="btn btn-yellow">
+              Add Expense
+            </button>
+            <button
+              type="button"
+              className="btn btn-gray"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </Modal>
     </div>
   );
