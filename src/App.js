@@ -309,7 +309,7 @@ function AppInner() {
         <form onSubmit={addMoney} className="grid gap-3">
           <div className="grid gap-1">
             <label htmlFor="money-amt" className="text-sm text-neutral-300">Amount (₹)</label>
-            <input data-testid="add-money-input" id="money-amt" value={moneyAmount} onChange={(e) => setMoneyAmount(e.target.value.replace(/[^0-9.]/g, ""))} className="bg-neutral-800 rounded-lg px-3 py-2 outline-none" inputMode="decimal" placeholder="Income Amount" />
+            <input type="number" data-testid="add-money-input" id="money-amt" value={moneyAmount} onChange={(e) => setMoneyAmount(e.target.value.replace(/[^0-9.]/g, ""))} className="bg-neutral-800 rounded-lg px-3 py-2 outline-none" inputMode="decimal" placeholder="Income Amount" />
           </div>
           <div className="flex justify-end gap-2 pt-2">
             <button type="button" onClick={closeMoney} className="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700">Cancel</button>
