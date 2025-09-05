@@ -70,8 +70,8 @@ function AppInner() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [walletBalance, setWalletBalance] = useState(() => {
-    const v = loadLS("walletBalance", 0);
-    return typeof v === "number" && !Number.isNaN(v) ? v : 0;
+    const v = loadLS("walletBalance", 5000);
+    return typeof v === "number" && !Number.isNaN(v) ? v : 5000;
   });
   const [expenses, setExpenses] = useState(() => loadLS("expenses", []));
 
@@ -235,6 +235,7 @@ function AppInner() {
       style: "currency",
       currency: "INR",
       maximumFractionDigits: 0,
+      useGrouping: false,
     }).format(n);
 
   return (
@@ -327,7 +328,7 @@ function AppInner() {
 
             <div className="rounded-2xl p-4 bg-neutral-900 border border-neutral-800 mt-4">
               <div className="flex items-center justify-between">
-                <h2 className="font-semibold">Expenses</h2>
+                <h2 className="font-semibold">Transactions</h2>
                 <span className="text-sm text-neutral-400">
                   {expenses.length} item(s)
                 </span>
@@ -428,8 +429,8 @@ function AppInner() {
             </label>
             <input
               data-testid="expense-amount-input"
-              id="amount"
-              name="amount"
+              id="price"
+              name="price"
               value={form.amount}
               onChange={onFormChange}
               placeholder="e.g., 500"
@@ -442,16 +443,20 @@ function AppInner() {
             <label htmlFor="category" className="text-sm text-neutral-300">
               Category *
             </label>
-            <input
+            <select
               data-testid="expense-category-input"
               id="category"
               name="category"
               value={form.category}
               onChange={onFormChange}
-              placeholder="e.g., Food"
               className="bg-neutral-800 rounded-lg px-3 py-2 outline-none"
               required
-            />
+            >
+              <option value="">Select Category</option>
+              <option value="Food">Food</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Travel">Travel</option>
+            </select>
           </div>
           <div className="grid gap-1">
             <label htmlFor="date" className="text-sm text-neutral-300">
