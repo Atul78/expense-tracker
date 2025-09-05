@@ -42,28 +42,36 @@ const WalletCard = () => {
       >
         <h2 className="modal-title">Add Balance</h2>
 
-        <div className="modal-body">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAddIncome();
+          }}
+          className="modal-body"
+        >
           <input
             type="number"
             placeholder="Income Amount"
             value={incomeAmount}
+            min="1"
             onChange={(e) => setIncomeAmount(e.target.value)}
-            min={0}
             className="modal-input"
+            required
           />
-        </div>
 
-        <div className="modal-actions">
-          <button className="btn btn-yellow" onClick={handleAddIncome}>
-            Add Balance
-          </button>
-          <button
-            className="btn btn-gray"
-            onClick={() => setIsModalOpen(false)}
-          >
-            Cancel
-          </button>
-        </div>
+          <div className="modal-actions">
+            <button type="submit" className="btn btn-yellow">
+              Add Balance
+            </button>
+            <button
+              type="button"
+              className="btn btn-gray"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </Modal>
     </div>
   );
