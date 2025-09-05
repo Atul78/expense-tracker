@@ -69,6 +69,7 @@ const ExpenseCard = () => {
         <div className="modal-body">
           <input
             type="text"
+            name="title"
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -76,6 +77,7 @@ const ExpenseCard = () => {
           />
           <input
             type="number"
+            name="price"
             placeholder="Price"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -83,6 +85,7 @@ const ExpenseCard = () => {
             min={0}
           />
           <select
+            name="category" // ✅ Added for Cypress test
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="modal-input"
@@ -94,6 +97,7 @@ const ExpenseCard = () => {
           </select>
           <input
             type="date"
+            name="date" // ✅ Added for Cypress test
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className="modal-input"
@@ -101,10 +105,15 @@ const ExpenseCard = () => {
         </div>
 
         <div className="modal-actions">
-          <button className="btn btn-yellow" onClick={handleAddExpense}>
+          <button
+            type="submit" // ✅ Important for Cypress `.contains('Add Expense').click()`
+            className="btn btn-yellow"
+            onClick={handleAddExpense}
+          >
             Add Expense
           </button>
           <button
+            type="button"
             className="btn btn-gray"
             onClick={() => setIsModalOpen(false)}
           >
